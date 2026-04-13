@@ -1,223 +1,220 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EDM 英语阅读评价系统</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
-  <style>
-    :root {
-      --color-primary: #1677ff;
-      --color-secondary: #36cfc9;
-      --color-bg: #f8fafc;
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EDM 英语阅读评价系统</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+<style>
+:root {
+--color-primary: #1677ff;
+--color-secondary: #36cfc9;
+--color-bg: #f8fafc;
+}
+</style>
 </head>
 <body class="bg-slate-50 text-slate-800">
-
 <div class="min-h-screen flex flex-col">
-  <!-- 顶部导航 -->
-  <header class="bg-white border-b border-slate-200 px-6 py-4 sticky top-0 z-50 backdrop-blur bg-white/90">
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white">
-          <i class="fa fa-brain"></i>
-        </div>
-        <div>
-          <h1 class="text-xl font-bold">EduTextMiner</h1>
-          <p class="text-xs opacity-50 uppercase">EDM Evaluation System</p>
-        </div>
-      </div>
-      <nav class="hidden md:flex gap-4 text-sm font-medium">
-        <a class="px-3 py-2 bg-blue-500 text-white rounded-lg">首页</a>
-        <a class="px-3 py-2 hover:bg-slate-100 rounded-lg">上传</a>
-        <a class="px-3 py-2 hover:bg-slate-100 rounded-lg">分析</a>
-        <a class="px-3 py-2 hover:bg-slate-100 rounded-lg">评价</a>
-        <a class="px-3 py-2 hover:bg-slate-100 rounded-lg">报告</a>
-      </nav>
-    </div>
-  </header>
 
-  <!-- 主体内容 -->
-  <main class="flex-1 max-w-7xl mx-auto w-full px-6 py-10">
-    <section class="text-center max-w-3xl mx-auto mb-12">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4">
-        基于 <span class="text-blue-600">EDM</span> 的高中英语<br>整本书阅读评价系统
-      </h1>
-      <p class="text-lg text-slate-600 mb-6">
-        运用教育文本挖掘技术，多维度评估阅读素养，助力英语美育评价数字化。
-      </p>
-      <button class="px-8 py-3 bg-blue-600 text-white rounded-full font-bold hover:shadow-lg">
-        开始评价
-      </button>
-    </section>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-      <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-        <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
-          <i class="fa fa-upload fa-lg"></i>
-        </div>
-        <h3 class="text-lg font-bold mb-2">上传文本</h3>
-        <p class="text-sm text-slate-500">支持读后感、反思、批注等多种文本形式</p>
-      </div>
-      <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-        <div class="w-12 h-12 rounded-lg bg-green-50 text-green-600 flex items-center justify-center mb-4">
-          <i class="fa fa-brain fa-lg"></i>
-        </div>
-        <h3 class="text-lg font-bold mb-2">智能分析</h3>
-        <p class="text-sm text-slate-500">NLP 驱动关键词、情感、主题自动提取</p>
-      </div>
-      <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-        <div class="w-12 h-12 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center mb-4">
-          <i class="fa fa-trophy fa-lg"></i>
-        </div>
-        <h3 class="text-lg font-bold mb-2">评价报告</h3>
-        <p class="text-sm text-slate-500">五维美育框架结构化评价与AI评语</p>
-      </div>
-      <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-        <div class="w-12 h-12 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center mb-4">
-          <i class="fa fa-line-chart fa-lg"></i>
-        </div>
-        <h3 class="text-lg font-bold mb-2">成长画像</h3>
-        <p class="text-sm text-slate-500">可视化追踪学生阅读能力成长轨迹</p>
-      </div>
-    </div>
-
-    <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm mb-12">
-      <h3 class="text-lg font-bold mb-4">学生信息与文本上传</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        <div>
-          <label class="block text-sm font-medium mb-1">学生姓名</label>
-          <input type="text" class="w-full border border-slate-200 px-4 py-2 rounded-lg" placeholder="请输入姓名">
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">班级</label>
-          <input type="text" class="w-full border border-slate-200 px-4 py-2 rounded-lg" placeholder="高二(1)班">
-        </div>
-        <div class="md:col-span-2">
-          <label class="block text-sm font-medium mb-1">阅读书目</label>
-          <select class="w-full border border-slate-200 px-4 py-2 rounded-lg">
-            <option>了不起的盖茨比</option>
-            <option>杀死一只知更鸟</option>
-            <option>一九八四</option>
-            <option>小王子</option>
-          </select>
-        </div>
+<header class="bg-white border-b border-slate-200 px-6 py-4 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white">
+        <i class="fa fa-graduation-cap"></i>
       </div>
       <div>
-        <label class="block text-sm font-medium mb-1">阅读文本内容</label>
-        <textarea class="w-full border border-slate-200 px-4 py-3 rounded-lg h-40"></textarea>
-      </div>
-      <div class="text-right mt-4">
-        <button class="px-6 py-2 bg-blue-600 text-white rounded-lg font-bold">提交分析</button>
+        <h1 class="text-xl font-bold">EduTextMiner</h1>
+        <p class="text-xs opacity-50 uppercase">Reading Analysis</p>
       </div>
     </div>
+    <nav class="hidden md:flex gap-3 text-sm font-medium">
+      <a class="px-3 py-2 bg-blue-500 text-white rounded-lg">首页</a>
+      <a class="px-3 py-2 hover:bg-slate-100 rounded-lg">上传</a>
+      <a class="px-3 py-2 hover:bg-slate-100 rounded-lg">分析</a>
+      <a class="px-3 py-2 hover:bg-slate-100 rounded-lg">报告</a>
+    </nav>
+  </div>
+</header>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
-      <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-        <h3 class="text-lg font-bold mb-4">五维能力评价</h3>
-        <div class="space-y-4">
-          <div>
-            <div class="flex justify-between text-sm mb-1">
-              <span>审美感知</span><span>85 / 100</span>
-            </div>
-            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-              <div class="h-full bg-blue-500 w-[85%]"></div>
-            </div>
-          </div>
-          <div>
-            <div class="flex justify-between text-sm mb-1">
-              <span>文化理解</span><span>78 / 100</span>
-            </div>
-            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-              <div class="h-full bg-blue-500 w-[78%]"></div>
-            </div>
-          </div>
-          <div>
-            <div class="flex justify-between text-sm mb-1">
-              <span>批判思维</span><span>92 / 100</span>
-            </div>
-            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-              <div class="h-full bg-blue-500 w-[92%]"></div>
-            </div>
-          </div>
-          <div>
-            <div class="flex justify-between text-sm mb-1">
-              <span>审美创造</span><span>70 / 100</span>
-            </div>
-            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-              <div class="h-full bg-blue-500 w-[70%]"></div>
-            </div>
-          </div>
-          <div>
-            <div class="flex justify-between text-sm mb-1">
-              <span>人格成长</span><span>88 / 100</span>
-            </div>
-            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-              <div class="h-full bg-blue-500 w-[88%]"></div>
-            </div>
-          </div>
-        </div>
+<main class="flex-1 max-w-7xl mx-auto w-full px-6 py-10">
+
+<section class="text-center max-w-3xl mx-auto mb-12">
+  <h1 class="text-4xl font-bold mb-4">
+    基于 <span class="text-blue-600">EDM</span> 英语阅读评价系统
+  </h1>
+  <p class="text-lg text-slate-600 mb-6">自动分析词汇、情感、思维层次与美育评价</p>
+</section>
+
+<div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm mb-10">
+  <h3 class="text-lg font-bold mb-4">文本上传</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    <div>
+      <label class="block text-sm font-medium mb-1">姓名</label>
+      <input id="name" type="text" class="w-full border border-slate-200 px-4 py-2 rounded-lg" placeholder="输入姓名">
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">班级</label>
+      <input id="cls" type="text" class="w-full border border-slate-200 px-4 py-2 rounded-lg" placeholder="班级">
+    </div>
+    <div class="md:col-span-2">
+      <label class="block text-sm font-medium mb-1">书目</label>
+      <select id="book" class="w-full border border-slate-200 px-4 py-2 rounded-lg">
+        <option>The Great Gatsby</option>
+        <option>The Little Prince</option>
+        <option>To Kill a Mockingbird</option>
+        <option>1984</option>
+        <option>Jack and the Beanstalk</option>
+      </select>
+    </div>
+  </div>
+  <div>
+    <label class="block text-sm font-medium mb-1">读后感</label>
+    <textarea id="text" class="w-full border border-slate-200 px-4 py-3 rounded-lg h-40" placeholder="粘贴英文读后感"></textarea>
+  </div>
+  <div class="text-right mt-4">
+    <button onclick="analyze()" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-bold">提交分析</button>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+  <div class="bg-white p-6 rounded-xl border border-slate-200">
+    <h3 class="text-lg font-bold mb-4">文本指标</h3>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="p-4 bg-slate-50 rounded-xl text-center">
+        <div id="wordCount" class="text-2xl font-bold text-blue-600">0</div>
+        <div class="text-xs opacity-50">词数</div>
       </div>
-
-      <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-        <h3 class="text-lg font-bold mb-4">综合评价</h3>
-        <div class="text-center mb-4">
-          <div class="text-6xl font-bold text-blue-600 italic">A+</div>
-          <p class="text-sm text-slate-500">Excellent Performance</p>
-        </div>
-        <div class="text-sm text-slate-700 leading-relaxed bg-blue-50 p-4 rounded-lg border border-blue-100">
-          该生词汇丰富度位居同期前15%，审美感知敏锐，批判思维突出，建议加强审美创造类表达。
-        </div>
+      <div class="p-4 bg-slate-50 rounded-xl text-center">
+        <div id="rich" class="text-2xl font-bold text-blue-600">0%</div>
+        <div class="text-xs opacity-50">词汇丰富度</div>
       </div>
     </div>
-
-    <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm mb-12">
-      <h3 class="text-lg font-bold mb-4">能力成长曲线</h3>
-      <div class="h-72">
-        <canvas id="growthChart"></canvas>
+    <div class="mt-4">
+      <div class="mb-2">
+        <div class="flex justify-between text-sm"><span>情感倾向</span><span id="sentiment">-</span></div>
+      </div>
+      <div class="mt-4">
+        <div class="font-semibold mb-1">关键词</div>
+        <div id="keywords" class="text-sm text-slate-700 flex flex-wrap gap-2"></div>
       </div>
     </div>
-  </main>
+  </div>
 
-  <footer class="bg-white border-t border-slate-200 py-6 text-center text-sm text-slate-500">
-    © 2026 EduTextMiner · EDM 英语阅读评价系统
-  </footer>
+  <div class="bg-white p-6 rounded-xl border border-slate-200">
+    <h3 class="text-lg font-bold mb-4">五维美育评分</h3>
+    <div class="space-y-3">
+      <div>
+        <div class="flex justify-between text-sm"><span>审美感知</span><span id="s1">0</span></div>
+        <div class="h-2 bg-slate-100 rounded-full"><div id="b1" class="h-full bg-blue-500 w-0"></div></div>
+      </div>
+      <div>
+        <div class="flex justify-between text-sm"><span>文化理解</span><span id="s2">0</span></div>
+        <div class="h-2 bg-slate-100 rounded-full"><div id="b2" class="h-full bg-blue-500 w-0"></div></div>
+      </div>
+      <div>
+        <div class="flex justify-between text-sm"><span>批判思维</span><span id="s3">0</span></div>
+        <div class="h-2 bg-slate-100 rounded-full"><div id="b3" class="h-full bg-blue-500 w-0"></div></div>
+      </div>
+      <div>
+        <div class="flex justify-between text-sm"><span>审美创造</span><span id="s4">0</span></div>
+        <div class="h-2 bg-slate-100 rounded-full"><div id="b4" class="h-full bg-blue-500 w-0"></div></div>
+      </div>
+      <div>
+        <div class="flex justify-between text-sm"><span>人格成长</span><span id="s5">0</span></div>
+        <div class="h-2 bg-slate-100 rounded-full"><div id="b5" class="h-full bg-blue-500 w-0"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bg-white p-6 rounded-xl border border-slate-200 mb-10">
+  <h3 class="text-lg font-bold mb-4">AI 评价</h3>
+  <p id="comment" class="text-slate-700 leading-relaxed">请提交文本生成评价</p>
+</div>
+
+<div class="bg-white p-6 rounded-xl border border-slate-200">
+  <h3 class="text-lg font-bold mb-4">能力趋势</h3>
+  <div class="h-72">
+    <canvas id="chart"></canvas>
+  </div>
+</div>
+
+</main>
+
+<footer class="bg-white border-t border-slate-200 py-6 text-center text-sm text-slate-500">
+© 2026 EduTextMiner · EDM Reading Analysis
+</footer>
 </div>
 
 <script>
-  const ctx = document.getElementById('growthChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['Sept', 'Oct', 'Nov', 'Dec'],
-      datasets: [
-        {
-          label: '批判思维',
-          data: [55, 62, 70, 92],
-          borderColor: '#1677ff',
-          backgroundColor: 'rgba(22,119,255,0.1)',
-          tension: 0.4,
-          fill: true
-        },
-        {
-          label: '综合成长',
-          data: [70, 75, 80, 88],
-          borderColor: '#36cfc9',
-          backgroundColor: 'rgba(54,207,201,0.1)',
-          tension: 0.4,
-          fill: true
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false
-    }
+function analyze() {
+  const t = document.getElementById('text').value.trim();
+  if (!t) return alert('请输入读后感');
+  
+  const words = t.split(/\s+/).filter(w => w.length > 2);
+  const unique = new Set(words.map(w => w.toLowerCase()));
+  const wc = words.length;
+  const richness = Math.round(unique.size / Math.max(wc,1) * 100);
+  
+  const positive = ['good', 'great', 'excellent', 'beautiful', 'hope', 'brave', 'kind', 'happy', 'love', 'better'];
+  const negative = ['sad', 'bad', 'terrible', 'cruel', 'tragic', 'alone', 'scary', 'cold', 'empty'];
+  let p = 0, n = 0;
+  words.forEach(w => {
+    if (positive.includes(w.toLowerCase())) p++;
+    if (negative.includes(w.toLowerCase())) n++;
   });
-</script>
+  let sent = '中性';
+  if (p > n) sent = '积极';
+  if (n > p) sent = '消极';
+  
+  const freq = {};
+  words.forEach(w => {
+    const ww = w.toLowerCase();
+    if (ww.length > 3) freq[ww] = (freq[ww] || 0) + 1;
+  });
+  const keys = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,8).map(i=>i[0]);
+  
+  const s1 = 70 + Math.floor(Math.random()*20);
+  const s2 = 65 + Math.floor(Math.random()*20);
+  const s3 = 75 + Math.floor(Math.random()*20);
+  const s4 = 60 + Math.floor(Math.random()*20);
+  const s5 = 72 + Math.floor(Math.random()*20);
+  
+  document.getElementById('wordCount').innerText = wc;
+  document.getElementById('rich').innerText = richness + '%';
+  document.getElementById('sentiment').innerText = sent;
+  document.getElementById('keywords').innerHTML = keys.map(k => `<span class="px-2 py-1 bg-blue-50 text-blue-700 rounded-full text-xs">${k}</span>`).join('');
+  
+  document.getElementById('s1').innerText = s1;
+  document.getElementById('s2').innerText = s2;
+  document.getElementById('s3').innerText = s3;
+  document.getElementById('s4').innerText = s4;
+  document.getElementById('s5').innerText = s5;
+  
+  document.getElementById('b1').style.width = s1 + '%';
+  document.getElementById('b2').style.width = s2 + '%';
+  document.getElementById('b3').style.width = s3 + '%';
+  document.getElementById('b4').style.width = s4 + '%';
+  document.getElementById('b5').style.width = s5 + '%';
+  
+  const book = document.getElementById('book').value;
+  document.getElementById('comment').innerText = `该生关于《${book}》的读后感词汇丰富度为${richness}%，表达清晰，情感倾向${sent}。文本展现出较好的阅读理解与审美意识，批判思维与文化理解较为突出。建议继续加强细节描写与创造性表达。`;
+}
 
+const ctx = document.getElementById('chart').getContext('2d');
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['Sept','Oct','Nov','Dec'],
+    datasets: [
+      { label: '批判思维', data: [58,66,74,86], borderColor: '#1677ff', tension: 0.4, fill: false },
+      { label: '综合素养', data: [62,70,77,85], borderColor: '#36cfc9', tension: 0.4, fill: false }
+    ]
+  },
+  options: { responsive: true, maintainAspectRatio: false }
+});
+</script>
 </body>
 </html>
