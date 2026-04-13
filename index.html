@@ -1,220 +1,195 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>EDM 英语阅读评价系统</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英语阅读美育评价系统</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
-<style>
-:root {
---color-primary: #1677ff;
---color-secondary: #36cfc9;
---color-bg: #f8fafc;
-}
-</style>
 </head>
 <body class="bg-slate-50 text-slate-800">
-<div class="min-h-screen flex flex-col">
+<div class="max-w-5xl mx-auto px-4 py-10">
 
-<header class="bg-white border-b border-slate-200 px-6 py-4 sticky top-0 z-50">
-  <div class="max-w-7xl mx-auto flex justify-between items-center">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white">
-        <i class="fa fa-graduation-cap"></i>
+  <h1 class="text-3xl font-bold mb-6 text-center">英语阅读美育评价系统</h1>
+
+  <!-- 输入区 -->
+  <div class="bg-white rounded-xl p-6 shadow-sm mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+      <div>
+        <label class="text-sm font-medium block mb-1">姓名</label>
+        <input id="name" class="w-full border rounded px-3 py-2">
       </div>
       <div>
-        <h1 class="text-xl font-bold">EduTextMiner</h1>
-        <p class="text-xs opacity-50 uppercase">Reading Analysis</p>
-      </div>
-    </div>
-    <nav class="hidden md:flex gap-3 text-sm font-medium">
-      <a class="px-3 py-2 bg-blue-500 text-white rounded-lg">首页</a>
-      <a class="px-3 py-2 hover:bg-slate-100 rounded-lg">上传</a>
-      <a class="px-3 py-2 hover:bg-slate-100 rounded-lg">分析</a>
-      <a class="px-3 py-2 hover:bg-slate-100 rounded-lg">报告</a>
-    </nav>
-  </div>
-</header>
-
-<main class="flex-1 max-w-7xl mx-auto w-full px-6 py-10">
-
-<section class="text-center max-w-3xl mx-auto mb-12">
-  <h1 class="text-4xl font-bold mb-4">
-    基于 <span class="text-blue-600">EDM</span> 英语阅读评价系统
-  </h1>
-  <p class="text-lg text-slate-600 mb-6">自动分析词汇、情感、思维层次与美育评价</p>
-</section>
-
-<div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm mb-10">
-  <h3 class="text-lg font-bold mb-4">文本上传</h3>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-    <div>
-      <label class="block text-sm font-medium mb-1">姓名</label>
-      <input id="name" type="text" class="w-full border border-slate-200 px-4 py-2 rounded-lg" placeholder="输入姓名">
-    </div>
-    <div>
-      <label class="block text-sm font-medium mb-1">班级</label>
-      <input id="cls" type="text" class="w-full border border-slate-200 px-4 py-2 rounded-lg" placeholder="班级">
-    </div>
-    <div class="md:col-span-2">
-      <label class="block text-sm font-medium mb-1">书目</label>
-      <select id="book" class="w-full border border-slate-200 px-4 py-2 rounded-lg">
-        <option>The Great Gatsby</option>
-        <option>The Little Prince</option>
-        <option>To Kill a Mockingbird</option>
-        <option>1984</option>
-        <option>Jack and the Beanstalk</option>
-      </select>
-    </div>
-  </div>
-  <div>
-    <label class="block text-sm font-medium mb-1">读后感</label>
-    <textarea id="text" class="w-full border border-slate-200 px-4 py-3 rounded-lg h-40" placeholder="粘贴英文读后感"></textarea>
-  </div>
-  <div class="text-right mt-4">
-    <button onclick="analyze()" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-bold">提交分析</button>
-  </div>
-</div>
-
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
-  <div class="bg-white p-6 rounded-xl border border-slate-200">
-    <h3 class="text-lg font-bold mb-4">文本指标</h3>
-    <div class="grid grid-cols-2 gap-4">
-      <div class="p-4 bg-slate-50 rounded-xl text-center">
-        <div id="wordCount" class="text-2xl font-bold text-blue-600">0</div>
-        <div class="text-xs opacity-50">词数</div>
-      </div>
-      <div class="p-4 bg-slate-50 rounded-xl text-center">
-        <div id="rich" class="text-2xl font-bold text-blue-600">0%</div>
-        <div class="text-xs opacity-50">词汇丰富度</div>
-      </div>
-    </div>
-    <div class="mt-4">
-      <div class="mb-2">
-        <div class="flex justify-between text-sm"><span>情感倾向</span><span id="sentiment">-</span></div>
-      </div>
-      <div class="mt-4">
-        <div class="font-semibold mb-1">关键词</div>
-        <div id="keywords" class="text-sm text-slate-700 flex flex-wrap gap-2"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="bg-white p-6 rounded-xl border border-slate-200">
-    <h3 class="text-lg font-bold mb-4">五维美育评分</h3>
-    <div class="space-y-3">
-      <div>
-        <div class="flex justify-between text-sm"><span>审美感知</span><span id="s1">0</span></div>
-        <div class="h-2 bg-slate-100 rounded-full"><div id="b1" class="h-full bg-blue-500 w-0"></div></div>
+        <label class="text-sm font-medium block mb-1">班级</label>
+        <input id="cls"  class="w-full border rounded px-3 py-2">
       </div>
       <div>
-        <div class="flex justify-between text-sm"><span>文化理解</span><span id="s2">0</span></div>
-        <div class="h-2 bg-slate-100 rounded-full"><div id="b2" class="h-full bg-blue-500 w-0"></div></div>
-      </div>
-      <div>
-        <div class="flex justify-between text-sm"><span>批判思维</span><span id="s3">0</span></div>
-        <div class="h-2 bg-slate-100 rounded-full"><div id="b3" class="h-full bg-blue-500 w-0"></div></div>
-      </div>
-      <div>
-        <div class="flex justify-between text-sm"><span>审美创造</span><span id="s4">0</span></div>
-        <div class="h-2 bg-slate-100 rounded-full"><div id="b4" class="h-full bg-blue-500 w-0"></div></div>
-      </div>
-      <div>
-        <div class="flex justify-between text-sm"><span>人格成长</span><span id="s5">0</span></div>
-        <div class="h-2 bg-slate-100 rounded-full"><div id="b5" class="h-full bg-blue-500 w-0"></div></div>
+        <label class="text-sm font-medium block mb-1">书目</label>
+        <select id="book" class="w-full border rounded px-3 py-2">
+          <option>The Great Gatsby</option>
+          <option>The Little Prince</option>
+          <option>To Kill a Mockingbird</option>
+          <option>1984</option>
+        </select>
       </div>
     </div>
+    <div class="mb-4">
+      <label class="text-sm font-medium block mb-1">读后感</label>
+      <textarea id="text" rows="8" class="w-full border rounded px-3 py-2"></textarea>
+    </div>
+    <button onclick="analyze()" class="bg-blue-600 text-white px-6 py-2 rounded font-medium">
+      一键分析
+    </button>
   </div>
-</div>
 
-<div class="bg-white p-6 rounded-xl border border-slate-200 mb-10">
-  <h3 class="text-lg font-bold mb-4">AI 评价</h3>
-  <p id="comment" class="text-slate-700 leading-relaxed">请提交文本生成评价</p>
-</div>
+  <!-- 结果区 -->
+  <div id="result" class="bg-white rounded-xl p-6 shadow-sm mb-8 hidden">
+    <div class="mb-4 pb-4 border-b">
+      <h3 class="font-bold mb-2">文本基础指标</h3>
+      <p>总词数：<span id="wc"></span></p>
+      <p>不重复词数：<span id="types"></span></p>
+      <p>词汇丰富度(RTTR)：<span id="rttr"></span></p>
+      <p>情感倾向：<span id="sent"></span></p>
+      <p>关键词：<span id="kw" class="text-blue-700"></span></p>
+    </div>
 
-<div class="bg-white p-6 rounded-xl border border-slate-200">
-  <h3 class="text-lg font-bold mb-4">能力趋势</h3>
-  <div class="h-72">
-    <canvas id="chart"></canvas>
+    <div class="mb-4 pb-4 border-b">
+      <h3 class="font-bold mb-3">五维美育评分</h3>
+      <div class="space-y-3 text-sm">
+        <div><b>审美感知：</b><span id="s1"></span> — <span id="r1" class="text-slate-600"></span></div>
+        <div><b>文化理解：</b><span id="s2"></span> — <span id="r2" class="text-slate-600"></span></div>
+        <div><b>批判思维：</b><span id="s3"></span> — <span id="r3" class="text-slate-600"></span></div>
+        <div><b>审美创造：</b><span id="s4"></span> — <span id="r4" class="text-slate-600"></span></div>
+        <div><b>人格成长：</b><span id="s5"></span> — <span id="r5" class="text-slate-600"></span></div>
+      </div>
+    </div>
+
+    <div class="mb-4 pb-4 border-b">
+      <h3 class="font-bold mb-2">综合评价</h3>
+      <p id="comment" class="text-slate-700 leading-relaxed"></p>
+    </div>
+
+    <button onclick="saveLocal()" class="bg-green-600 text-white px-4 py-2 rounded mr-2">保存到本地</button>
+    <button onclick="exportOne()" class="bg-indigo-600 text-white px-4 py-2 rounded">导出本条记录</button>
   </div>
-</div>
 
-</main>
+  <!-- 历史记录 -->
+  <div class="bg-white rounded-xl p-6 shadow-sm">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="font-bold">班级历史记录</h3>
+      <button onclick="exportAll()" class="bg-gray-700 text-white px-3 py-1 rounded text-sm">导出全部Excel</button>
+    </div>
+    <div id="history" class="text-sm space-y-2 max-h-60 overflow-auto"></div>
+  </div>
 
-<footer class="bg-white border-t border-slate-200 py-6 text-center text-sm text-slate-500">
-© 2026 EduTextMiner · EDM Reading Analysis
-</footer>
 </div>
 
 <script>
+let currentData = null;
+
 function analyze() {
-  const t = document.getElementById('text').value.trim();
-  if (!t) return alert('请输入读后感');
-  
-  const words = t.split(/\s+/).filter(w => w.length > 2);
-  const unique = new Set(words.map(w => w.toLowerCase()));
+  const name = document.getElementById('name').value.trim();
+  const cls = document.getElementById('cls').value.trim();
+  const text = document.getElementById('text').value.trim();
+  if (!name || !cls || !text) return alert('请完善信息');
+
+  // 基础指标
+  const words = text.toLowerCase().split(/\s+/).filter(w => w.length > 2);
   const wc = words.length;
-  const richness = Math.round(unique.size / Math.max(wc,1) * 100);
-  
-  const positive = ['good', 'great', 'excellent', 'beautiful', 'hope', 'brave', 'kind', 'happy', 'love', 'better'];
-  const negative = ['sad', 'bad', 'terrible', 'cruel', 'tragic', 'alone', 'scary', 'cold', 'empty'];
-  let p = 0, n = 0;
-  words.forEach(w => {
-    if (positive.includes(w.toLowerCase())) p++;
-    if (negative.includes(w.toLowerCase())) n++;
-  });
-  let sent = '中性';
-  if (p > n) sent = '积极';
-  if (n > p) sent = '消极';
-  
+  const types = new Set(words).size;
+  const rttr = Math.sqrt(wc) > 0 ? (types / Math.sqrt(wc)).toFixed(2) : 0;
+
+  // 情感
+  const pos = ['hope', 'brave', 'good', 'great', 'beautiful', 'admire', 'kind', 'wise'];
+  const neg = ['sad', 'bad', 'cruel', 'tragic', 'cold', 'empty', 'selfish', 'broken'];
+  let pc = 0, nc = 0;
+  words.forEach(w => { pos.includes(w) && pc++; neg.includes(w) && nc++; });
+  const sent = pc > nc ? '积极' : nc > pc ? '消极' : '中性';
+
+  // 关键词
   const freq = {};
-  words.forEach(w => {
-    const ww = w.toLowerCase();
-    if (ww.length > 3) freq[ww] = (freq[ww] || 0) + 1;
-  });
-  const keys = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,8).map(i=>i[0]);
-  
-  const s1 = 70 + Math.floor(Math.random()*20);
-  const s2 = 65 + Math.floor(Math.random()*20);
-  const s3 = 75 + Math.floor(Math.random()*20);
-  const s4 = 60 + Math.floor(Math.random()*20);
-  const s5 = 72 + Math.floor(Math.random()*20);
-  
-  document.getElementById('wordCount').innerText = wc;
-  document.getElementById('rich').innerText = richness + '%';
-  document.getElementById('sentiment').innerText = sent;
-  document.getElementById('keywords').innerHTML = keys.map(k => `<span class="px-2 py-1 bg-blue-50 text-blue-700 rounded-full text-xs">${k}</span>`).join('');
-  
-  document.getElementById('s1').innerText = s1;
-  document.getElementById('s2').innerText = s2;
-  document.getElementById('s3').innerText = s3;
-  document.getElementById('s4').innerText = s4;
-  document.getElementById('s5').innerText = s5;
-  
-  document.getElementById('b1').style.width = s1 + '%';
-  document.getElementById('b2').style.width = s2 + '%';
-  document.getElementById('b3').style.width = s3 + '%';
-  document.getElementById('b4').style.width = s4 + '%';
-  document.getElementById('b5').style.width = s5 + '%';
-  
-  const book = document.getElementById('book').value;
-  document.getElementById('comment').innerText = `该生关于《${book}》的读后感词汇丰富度为${richness}%，表达清晰，情感倾向${sent}。文本展现出较好的阅读理解与审美意识，批判思维与文化理解较为突出。建议继续加强细节描写与创造性表达。`;
+  words.forEach(w => freq[w] = (freq[w] || 0) + 1);
+  const kw = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,6).map(i=>i[0]).join('、');
+
+  // 五维评分 + 理由
+  const s1 = Math.min(95, 70 + pc + (text.match(/beautiful|wonderful|strange|strange|light|blue|dream/g)?.length||0)*2);
+  const s2 = Math.min(95, 65 + (text.match(/society|american|dream|wealth|value|life/g)?.length||0)*3);
+  const s3 = Math.min(95, 70 + (text.match(/think|believe|should|because|therefore|in my opinion/g)?.length||0)*3);
+  const s4 = Math.min(95, 65 + (text.match(/i think|i feel|maybe|could|would|imagine/g)?.length||0)*2);
+  const s5 = Math.min(95, 72 + pc*2);
+
+  const r1 = s1 >= 85 ? '善于感知语言美与情感' : s1 >=75 ? '能感知文本情感' : '情感表达较基础';
+  const r2 = s2 >= 85 ? '文化背景理解深刻' : s2 >=75 ? '理解基本文化内涵' : '文化理解有待加强';
+  const r3 = s3 >= 85 ? '具备较强批判与评价思维' : s3 >=75 ? '能进行简单分析' : '以复述内容为主';
+  const r4 = s4 >= 85 ? '有独特个人观点与创造意识' : s4 >=75 ? '有一定个人想法' : '个人表达较少';
+  const r5 = s5 >= 85 ? '阅读感悟深刻，体现正向价值' : s5 >=75 ? '有一定收获与反思' : '反思较少';
+
+  // 评价
+  const comment = `该生读后感词汇丰富度(RTTR=${rttr})，情感倾向${sent}。审美感知${s1}分，文化理解${s2}分，批判思维${s3}分，审美创造${s4}分，人格成长${s5}分。整体表现${s3+s2>=160?'良好':'一般'}，建议${s3+s2>=160?'加强创意表达':'提升分析与反思深度'}。`;
+
+  // 显示
+  document.getElementById('result').classList.remove('hidden');
+  document.getElementById('wc').textContent = wc;
+  document.getElementById('types').textContent = types;
+  document.getElementById('rttr').textContent = rttr;
+  document.getElementById('sent').textContent = sent;
+  document.getElementById('kw').textContent = kw;
+  document.getElementById('s1').textContent = s1;
+  document.getElementById('s2').textContent = s2;
+  document.getElementById('s3').textContent = s3;
+  document.getElementById('s4').textContent = s4;
+  document.getElementById('s5').textContent = s5;
+  document.getElementById('r1').textContent = r1;
+  document.getElementById('r2').textContent = r2;
+  document.getElementById('r3').textContent = r3;
+  document.getElementById('r4').textContent = r4;
+  document.getElementById('r5').textContent = r5;
+  document.getElementById('comment').textContent = comment;
+
+  currentData = { name, cls, book: document.getElementById('book').value, wc, rttr, sent, s1,s2,s3,s4,s5, comment, time: new Date().toLocaleString() };
 }
 
-const ctx = document.getElementById('chart').getContext('2d');
-new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: ['Sept','Oct','Nov','Dec'],
-    datasets: [
-      { label: '批判思维', data: [58,66,74,86], borderColor: '#1677ff', tension: 0.4, fill: false },
-      { label: '综合素养', data: [62,70,77,85], borderColor: '#36cfc9', tension: 0.4, fill: false }
-    ]
-  },
-  options: { responsive: true, maintainAspectRatio: false }
-});
+// 保存本地
+function saveLocal() {
+  if (!currentData) return;
+  let list = JSON.parse(localStorage.getItem('readings') || '[]');
+  list.push(currentData);
+  localStorage.setItem('readings', JSON.stringify(list));
+  alert('保存成功');
+  showHistory();
+}
+
+// 显示历史
+function showHistory() {
+  const list = JSON.parse(localStorage.getItem('readings') || '[]');
+  const h = document.getElementById('history');
+  h.innerHTML = list.map((i,idx) => `
+  <div class="p-2 border rounded">${idx+1}. ${i.name}(${i.cls}) | ${i.book} | 批判思维${i.s3} | 总分${(i.s1+i.s2+i.s3+i.s4+i.s5)/5|0}</div>
+  `).join('');
+}
+
+// 导出单条
+function exportOne() {
+  if (!currentData) return;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([`姓名,班级,书目,总词数,RTTR,情感,审美感知,文化理解,批判思维,审美创造,人格成长,评价
+${currentData.name},${currentData.cls},${currentData.book},${currentData.wc},${currentData.rttr},${currentData.sent},${currentData.s1},${currentData.s2},${currentData.s3},${currentData.s4},${currentData.s5},"${currentData.comment}"`], { type: 'text/csv' }));
+  a.download = '阅读评价.csv';
+  a.click();
+}
+
+// 导出全部
+function exportAll() {
+  const list = JSON.parse(localStorage.getItem('readings') || '[]');
+  const head = '姓名,班级,书目,总词数,RTTR,情感,审美感知,文化理解,批判思维,审美创造,人格成长,评价\n';
+  const rows = list.map(i => `${i.name},${i.cls},${i.book},${i.wc},${i.rttr},${i.sent},${i.s1},${i.s2},${i.s3},${i.s4},${i.s5},"${i.comment}"`).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([head+rows], { type: 'text/csv' }));
+  a.download = '班级阅读评价.csv';
+  a.click();
+}
+
+// 初始化
+showHistory();
 </script>
 </body>
 </html>
